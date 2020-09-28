@@ -29,7 +29,6 @@ public class HalloJavamitForEach {
         for (int i = 0; i < 10; i++) {
             list.add("1." + i);
         }
-
         for (String string : list) {
             System.out.println(list.get(list.indexOf(string)));
         }
