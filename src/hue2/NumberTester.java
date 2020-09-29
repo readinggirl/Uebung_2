@@ -35,6 +35,20 @@ public class NumberTester {
             return n % 2 == 0;
         };
 
+        nt.primeTester = (int n) -> {
+            int factors = 0;
+            int j = 1;
+
+            while (j <= n) {
+                if (n % j == 0) {
+                    factors++;
+                }
+                j++;
+            }
+            return (factors == 2);
+
+        };
+
     }
 
     public NumberTester(String fileName) {
