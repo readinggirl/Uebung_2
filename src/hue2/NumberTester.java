@@ -28,9 +28,6 @@ public class NumberTester {
 
     public static void main(String[] args) {
         NumberTester nt = new NumberTester("datei.txt");
-        nt.testFile();
-
-        String[] texts = nt.lines.clone();
 
         nt.oddEvenTester = (int n) -> {
             return n % 2 == 0;
@@ -51,32 +48,23 @@ public class NumberTester {
         };
 
         nt.palindromeTester = (int n) -> {
-            char[] front = new char[String.valueOf(n).length()];
-            char[] back = new char[String.valueOf(n).length()];
+            String line = Integer.toString(n);
+            int length = line.length();
+            int front = 0;
+            int back = length - 1;
 
-            //arrays befuellen
-            for (int i = 0; i < front.length; i++) {
-                front[i] = String.valueOf(i).charAt(i);
-            }
-
-            int count = 0;
-            for (int i = back.length; i < -1; i++) {
-                back[count] = String.valueOf(i).charAt(i);
-                count++;
-            }
-
-            //check if front[0] gleich back[back.length-1], wenn true dann geh anch innen und wiederhole den vorgang
-            count = back.length - 1;
-            for (int i = 0; i < front.length; i++) {
-                if (front[i] == back[count]) {
-                    count--;
-                } else {
+            while (back > front) {
+                char frontChar = line.charAt(front++);
+                char backChar = line.charAt(back--);
+                if (frontChar != backChar) {
                     return false;
                 }
             }
-            return true;
 
+            return true;
         };
+
+        nt.testFile();
 
     }
 
@@ -116,7 +104,49 @@ public class NumberTester {
     }
 
     public void testFile() {
+        for (int i = 0; i < lines.length; i++) {
+            int[] line = deserialize(lines[i]);
 
+            switch (line[0]) {
+                case 1:
+                    boolean erg = oddEvenTester.testNumber(line[1]);
+                    if (erg) {
+                        System.out.println("EVEN");
+                    } else {
+                        System.out.println("ODD");
+                    }
+                    break;
+                case 2:
+                    boolean erg2 = primeTester.testNumber(line[1]);
+                    if (erg2) {
+                        System.out.println("PRIME");
+                    } else {
+                        System.out.println("NO PRIME");
+                    }
+                    break;
+                case 3:
+                    boolean erg3 = palindromeTester.testNumber(line[1]);
+                    if (erg3) {
+                        System.out.println("PALINDROME");
+                    } else {
+                        System.out.println("NO PALINDROME");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    private static int[] deserialize(String line) {
+        String[] val = line.split(" ");
+        int[] lineItems = new int[val.length];
+
+        for (int i = 0; i < lineItems.length; i++) {
+            lineItems[i] = Integer.parseInt(val[i]);
+        }
+
+        return lineItems;
     }
 
     public interface NumberTest {
