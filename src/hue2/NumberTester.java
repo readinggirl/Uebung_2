@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -46,6 +47,34 @@ public class NumberTester {
                 j++;
             }
             return (factors == 2);
+
+        };
+
+        nt.palindromeTester = (int n) -> {
+            char[] front = new char[String.valueOf(n).length()];
+            char[] back = new char[String.valueOf(n).length()];
+
+            //arrays befuellen
+            for (int i = 0; i < front.length; i++) {
+                front[i] = String.valueOf(i).charAt(i);
+            }
+
+            int count = 0;
+            for (int i = back.length; i < -1; i++) {
+                back[count] = String.valueOf(i).charAt(i);
+                count++;
+            }
+
+            //check if front[0] gleich back[back.length-1], wenn true dann geh anch innen und wiederhole den vorgang
+            count = back.length - 1;
+            for (int i = 0; i < front.length; i++) {
+                if (front[i] == back[count]) {
+                    count--;
+                } else {
+                    return false;
+                }
+            }
+            return true;
 
         };
 
