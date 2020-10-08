@@ -11,4 +11,5 @@ package hue2.Bsp4;
  */
 public interface CalculationOperation {
 
+    Number calc(Number x, Number y);
 }
